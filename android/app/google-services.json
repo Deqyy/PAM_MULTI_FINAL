@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "700748988222",
+    "project_id": "projectakhirpamulti",
+    "storage_bucket": "projectakhirpamulti.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:700748988222:android:70b8d2bd3cf4249f13b66f",
+        "android_client_info": {
+          "package_name": "com.example.app_resep_makanan"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "700748988222-cdd0dvqkdc4l6m7etotv9mf920tcatde.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB04tr1nQb6YfEdJXr7lwC7nbytov7tY2k"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "700748988222-cdd0dvqkdc4l6m7etotv9mf920tcatde.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
