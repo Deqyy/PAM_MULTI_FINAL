@@ -69,7 +69,7 @@ class _HomePageState extends State<HomePage> {
       icon: SvgPicture.asset(
         svgPath,
         color: _selectedIndex == index
-            ? const Color(0xFF70B9BE)
+            ? const Color(0xFFEF6C00)
             : const Color(0xFF97A2B0),
         height: 35.0,
       ),
@@ -166,7 +166,7 @@ class _HomeContentState extends State<HomeContent> {
             const SizedBox(height: 10.0),
             Center(
               child: SvgPicture.asset(
-                'assets/images/card-sample.svg',
+                'assets/images/card.svg',
                 width: 400.0,
               ),
             ),
@@ -247,7 +247,7 @@ class _HomeContentState extends State<HomeContent> {
         child: TextButton(
           style: TextButton.styleFrom(
             backgroundColor: categoryModel.selectedCategory == index
-                ? const Color(0xFF70B9BE)
+                ? const Color(0xFFEF6C00)
                 : const Color(0xFFF1F5F5),
             foregroundColor: categoryModel.selectedCategory == index
                 ? Colors.white

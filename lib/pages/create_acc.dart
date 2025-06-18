@@ -52,7 +52,7 @@ class CreateAcc extends StatelessWidget {
                     fontSize: 24,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF70B9BE),
+                    color: Color(0xFFEF6C00),
                   ),
                 ),
               ),
@@ -217,7 +217,7 @@ class CreateAcc extends StatelessWidget {
                           await AuthService().signUp(context: context ,email: _emailController.text, password: _passwordController.text, name: _nameController.text);
                         },
                         style: TextButton.styleFrom(
-                          backgroundColor: const Color(0xFF70B9BE),
+                          backgroundColor: const Color(0xFFEF6C00),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),

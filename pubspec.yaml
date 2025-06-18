@@ -30,13 +30,13 @@ flutter:
     - assets/icons/google_icon.svg
     - assets/icons/arrow_back.svg
     - assets/icons/sun.svg
-    - assets/images/card-sample.svg
+    - assets/images/card.svg
     - assets/icons/clock.svg
     - assets/icons/fire.svg
     - assets/images/navbar.png
     - assets/icons/search.svg
     - assets/icons/heart.svg
-    - assets/icons/blue_heart.svg
+    - assets/icons/orange-heart.svg
     - assets/icons/black_search.svg
     - assets/icons/setting.svg
     - assets/icons/rectangle.svg

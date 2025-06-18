@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 class LoginPage extends StatelessWidget {
-
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _passwordController = TextEditingController();
 
@@ -34,9 +33,7 @@ class LoginPage extends StatelessWidget {
                         Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => LandingPage()
-                          )
-                        );
+                                builder: (context) => LandingPage()));
                       },
                       icon: const Icon(Icons.arrow_back),
                     ),
@@ -51,7 +48,7 @@ class LoginPage extends StatelessWidget {
                     fontSize: 24,
                     fontFamily: 'Poppins',
                     fontWeight: FontWeight.bold,
-                    color: Color(0xFF70B9BE),
+                    color: Color(0xFFEF6C00),
                   ),
                 ),
               ),
@@ -171,10 +168,13 @@ class LoginPage extends StatelessWidget {
                       height: 50,
                       child: TextButton(
                         onPressed: () async {
-                          await AuthService().signIn(context: context, email: _emailController.text, password: _passwordController.text);
+                          await AuthService().signIn(
+                              context: context,
+                              email: _emailController.text,
+                              password: _passwordController.text);
                         },
                         style: TextButton.styleFrom(
-                          backgroundColor: const Color(0xFF70B9BE),
+                          backgroundColor: const Color(0xFFEF6C00),
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(20),
                           ),
@@ -235,7 +235,8 @@ class LoginPage extends StatelessWidget {
                           ),
                           child: IconButton(
                             onPressed: () {
-                              AuthService().handleGoogleSignIn(context: context);
+                              AuthService()
+                                  .handleGoogleSignIn(context: context);
                             },
                             icon: SvgPicture.asset(
                               'assets/icons/google_icon.svg',
@@ -273,14 +274,14 @@ class LoginPage extends StatelessWidget {
                                 decorationColor: Color(0xFF3C83F6),
                               ),
                               recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => CreateAcc(),
-                                  ),
-                                );
-                              },
+                                ..onTap = () {
+                                  Navigator.pushReplacement(
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => CreateAcc(),
+                                    ),
+                                  );
+                                },
                             ),
                           ],
                         ),

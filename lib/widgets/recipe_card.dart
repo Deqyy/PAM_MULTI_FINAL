@@ -140,7 +140,7 @@ class _RecipeCardState extends State<RecipeCard> {
                         child: Center(
                           child: SvgPicture.asset(
                             isIconPressed
-                                ? 'assets/icons/blue_heart.svg'
+                                ? 'assets/icons/orange-heart.svg'
                                 : 'assets/icons/heart.svg',
                             width: 20.0,
                             height: 20.0,
