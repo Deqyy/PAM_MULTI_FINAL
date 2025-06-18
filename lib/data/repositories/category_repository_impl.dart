@@ -1,23 +1,25 @@
+import 'package:app_resep_makanan/domain/repositories/category_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:app_resep_makanan/models/recipe_model.dart';
-import 'package:app_resep_makanan/models/recipe_provider.dart';
 import 'package:provider/provider.dart';
+import '../../domain/entities/recipe_model.dart';
+import '../../presentations/providers/recipe_provider.dart';
 
-class CategoryModel with ChangeNotifier {
-  int _selectedCategory = 0;  
-  List<String> _categories = ['Breakfast', 'Lunch', 'Dinner'];
+class CategoryRepositoryImpl implements CategoryRepository {
+  int _selectedCategory = 0;
+  final List<String> _categories = ['Breakfast', 'Lunch', 'Dinner'];
   List<Recipe> _categoryRecipes = [];
 
+  @override
   int get selectedCategory => _selectedCategory;
+  @override
   List<String> get categories => _categories;
+  @override
   List<Recipe> get categoryRecipes => _categoryRecipes;
-
-  CategoryModel();
 
   void setSelectedCategory(int index, BuildContext context) {
     _selectedCategory = index;
-    notifyListeners();
-    _loadRecipesForCategory(context, index); 
+    // notifyListeners();
+    _loadRecipesForCategory(context, index);
   }
 
   void _loadRecipesForCategory(BuildContext context, int categoryIndex) {
@@ -53,8 +55,6 @@ class CategoryModel with ChangeNotifier {
 
     _categoryRecipes = allRecipes.sublist(startIndex, endIndex);
 
-    notifyListeners(); 
+    // notifyListeners();
   }
 }
-
-

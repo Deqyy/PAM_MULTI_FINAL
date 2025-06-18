@@ -1,6 +1,6 @@
-import 'package:app_resep_makanan/models/recipe_provider.dart';
+import 'package:app_resep_makanan/presentations/providers/recipe_provider.dart';
 import 'package:app_resep_makanan/services/auth_service.dart';
-import 'package:app_resep_makanan/widgets/recipe_card.dart';
+import 'package:app_resep_makanan/presentations/widgets/recipe_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
