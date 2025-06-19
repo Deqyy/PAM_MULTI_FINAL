@@ -4,6 +4,7 @@ import 'package:app_resep_makanan/domain/usecases/category/set_selected.dart';
 import 'package:app_resep_makanan/domain/usecases/recipe/add_favorite_recipe.dart';
 import 'package:app_resep_makanan/domain/usecases/recipe/get_favorite_recipes_stream.dart';
 import 'package:app_resep_makanan/domain/usecases/recipe/get_recipes_stream.dart';
+import 'package:app_resep_makanan/presentations/providers/auth_provider.dart';
 import 'package:app_resep_makanan/presentations/providers/recipe_provider.dart';
   import 'package:app_resep_makanan/presentations/widgets/wrapper.dart';
   import 'package:flutter/material.dart';
@@ -38,6 +39,7 @@ import 'package:app_resep_makanan/presentations/providers/recipe_provider.dart';
         providers: [
           ChangeNotifierProvider<CategoryProvider>(create: (_) => CategoryProvider(categoryRepository: categoryRepository, setSelectedUseCase: SetSelected(categoryRepository))),
           ChangeNotifierProvider<RecipeProvider>(create: (_) => RecipeProvider(recipeRepo: recipeRepository, getRecipesStreamUseCase: GetRecipesStream(recipeRepository), getFavoriteRecipesStreamUseCase: GetFavoriteRecipesStream(recipeRepository))),
+          ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider()),
         ],
         child: Builder(builder: (BuildContext context) {
           return MaterialApp(

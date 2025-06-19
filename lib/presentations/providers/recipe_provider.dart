@@ -23,8 +23,8 @@ class RecipeProvider extends ChangeNotifier {
   List<Recipe> get recipes => _recipes;
   List<Recipe> get favoriteRecipes => _favoriteRecipes;
 
-  late final StreamSubscription<DatabaseEvent> _recipeStream;
-  late final StreamSubscription<DatabaseEvent> _favRecipeStream;
+  // late final StreamSubscription<DatabaseEvent> _recipeStream;
+  // late final StreamSubscription<DatabaseEvent> _favRecipeStream;
 
   final GetRecipesStream getRecipesStreamUseCase;
   final GetFavoriteRecipesStream getFavoriteRecipesStreamUseCase;
@@ -34,11 +34,21 @@ class RecipeProvider extends ChangeNotifier {
 
   StreamSubscription? _recipeStreamSubscription;
   StreamSubscription? _favRecipeStreamSubscription;
+  StreamSubscription? _authStateSubscription;
 
   RecipeProvider(
       {required this.recipeRepo, required this.getRecipesStreamUseCase, required this.getFavoriteRecipesStreamUseCase}) {
     _listenToRecipes();
     _listenToFavRecipes();
+
+    // Listen to auth state changes to re-fetch when user logs in/out
+    _authStateSubscription = FirebaseAuth.instance.authStateChanges().listen((user) {
+      // Re-fetch favorite recipes whenever the auth state changes
+      // This ensures the stream is re-evaluated with the correct currentUser
+
+      _favRecipeStreamSubscription?.cancel(); // Cancel old subscription
+      _listenToFavRecipes(); // Start new subscription with potentially new user
+    });
   }
 
   // void _listenToRecipes() {
@@ -80,8 +90,9 @@ class RecipeProvider extends ChangeNotifier {
 
   @override
   void dispose() {
-    _recipeStream.cancel();
-    _favRecipeStream.cancel();
+    _recipeStreamSubscription?.cancel();
+    _favRecipeStreamSubscription?.cancel();
+    _authStateSubscription?.cancel();
     super.dispose();
   }
 

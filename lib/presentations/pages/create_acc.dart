@@ -1,9 +1,11 @@
 import 'package:app_resep_makanan/presentations/pages/landing_page.dart';
 import 'package:app_resep_makanan/presentations/pages/login_page.dart';
+import 'package:app_resep_makanan/presentations/providers/auth_provider.dart';
 import 'package:app_resep_makanan/services/auth_service.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
 
 class CreateAcc extends StatelessWidget {
 
@@ -209,29 +211,33 @@ class CreateAcc extends StatelessWidget {
                     ),
                     const SizedBox(height: 40),
                     //BUTTON SIGN IN
-                    SizedBox(
-                      width: double.infinity,
-                      height: 50,
-                      child: TextButton(
-                        onPressed: () async {
-                          await AuthService().signUp(context: context ,email: _emailController.text, password: _passwordController.text, name: _nameController.text);
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: const Color(0xFFEF6C00),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                    Consumer<AuthProvider>(
+                      builder: (context, authProvider, child) {
+                        return SizedBox(
+                          width: double.infinity,
+                          height: 50,
+                          child: TextButton(
+                            onPressed: () async {
+                              await authProvider.signUp(context: context ,email: _emailController.text, password: _passwordController.text, name: _nameController.text);
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: const Color(0xFFEF6C00),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                            child: const Text(
+                              'Daftar',
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontFamily: 'Poppins',
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
+                            ),
                           ),
-                        ),
-                        child: const Text(
-                          'Daftar',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
+                        );
+                      }
                     ),
                     const SizedBox(height: 50),
                     const Padding(

@@ -15,13 +15,27 @@ class RecipeRepositoryImpl implements RecipeRepository {
   final _dbRef = FirebaseDatabase.instance.ref();
 
   @override
-  String? currentUser = FirebaseAuth.instance.currentUser?.displayName;
-
-  @override
   List<Recipe> get recipes => _recipes;
 
   @override
   List<Recipe> get favoriteRecipes => _favoriteRecipes;
+
+
+  String? currentUserDisplayName;
+  late StreamSubscription<User?> _authStateChangesSubscription;
+
+  RecipeRepositoryImpl() {
+    _listenToAuthStateChanges();
+  }
+
+  void _listenToAuthStateChanges() {
+    _authStateChangesSubscription = FirebaseAuth.instance.authStateChanges().listen((user) {
+
+      currentUserDisplayName = user?.displayName;
+      print('Auth State Changed: Current User Display Name: $currentUserDisplayName');
+    });
+  }
+
 
   @override
   Stream<List<Recipe>> getRecipesStream() {
@@ -40,7 +54,7 @@ class RecipeRepositoryImpl implements RecipeRepository {
 
   @override
   Stream<List<Recipe>> getFavoriteRecipesStream() {
-    return _dbRef.child(FAV_RECIPE_PATH).child(currentUser!).child('favorite').onValue.map((event) {
+    return _dbRef.child(FAV_RECIPE_PATH).child(currentUserDisplayName!).child('favorite').onValue.map((event) {
       if (event.snapshot.value == null) {
         return []; // Handle case where there are no favorite recipes
       }
@@ -70,6 +84,10 @@ class RecipeRepositoryImpl implements RecipeRepository {
       instruksi : data['instruksi'].trim().split("."),
       urlGambar : data['urlGambarOnline'],
     );
+  }
+
+  void dispose() {
+    _authStateChangesSubscription.cancel();
   }
 
   // @override

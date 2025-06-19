@@ -6,7 +6,7 @@ import 'package:firebase_database/firebase_database.dart';
 abstract class RecipeRepository {
   List<Recipe>? _recipes;
   List<Recipe>? _favoriteRecipes;
-  String? currentUser;
+  String? currentUserDisplayName;
   final _dbRef = FirebaseDatabase.instance.ref();
 
   static const String RECIPE_PATH = 'recipe';

@@ -4,6 +4,9 @@ import 'package:app_resep_makanan/services/auth_service.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/auth_provider.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController _emailController = TextEditingController();
@@ -166,29 +169,57 @@ class LoginPage extends StatelessWidget {
                     SizedBox(
                       width: double.infinity,
                       height: 50,
-                      child: TextButton(
-                        onPressed: () async {
-                          await AuthService().signIn(
-                              context: context,
-                              email: _emailController.text,
-                              password: _passwordController.text);
-                        },
-                        style: TextButton.styleFrom(
-                          backgroundColor: const Color(0xFFEF6C00),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
-                          ),
-                        ),
-                        child: const Text(
-                          'Sign In',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontFamily: 'Poppins',
-                            fontWeight: FontWeight.w600,
-                            color: Colors.white,
-                          ),
-                        ),
-                      ),
+                      child: Consumer<AuthProvider>(
+                        builder: (context, authProvider, child) {
+                          print('Current isLoading state: ${authProvider.isLoading}'); // <-- ADD THIS
+                          return TextButton(onPressed:
+                            // authProvider.isLoading ? null : // Disable button when loading
+                            () async {
+                              await authProvider.signIn(
+                                  context: context,
+                                  email: _emailController.text,
+                                  password: _passwordController.text);
+                            },
+                            style: TextButton.styleFrom(
+                              backgroundColor: const Color(0xFFEF6C00),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(20),
+                              ),
+                            ),
+                           child: const Text(
+                            'Sign In',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontFamily: 'Poppins',
+                              fontWeight: FontWeight.w600,
+                              color: Colors.white,
+                            ),
+                          ),);
+                        }
+                      )
+                      // child: TextButton(
+                      //   onPressed: () async {
+                      //     await AuthService().signIn(
+                      //         context: context,
+                      //         email: _emailController.text,
+                      //         password: _passwordController.text);
+                      //   },
+                      //   style: TextButton.styleFrom(
+                      //     backgroundColor: const Color(0xFFEF6C00),
+                      //     shape: RoundedRectangleBorder(
+                      //       borderRadius: BorderRadius.circular(20),
+                      //     ),
+                      //   ),
+                      //   child: const Text(
+                      //     'Sign In',
+                      //     style: TextStyle(
+                      //       fontSize: 14,
+                      //       fontFamily: 'Poppins',
+                      //       fontWeight: FontWeight.w600,
+                      //       color: Colors.white,
+                      //     ),
+                      //   ),
+                      // ),
                     ),
                     const SizedBox(height: 50),
                     const Padding(
@@ -233,19 +264,24 @@ class LoginPage extends StatelessWidget {
                             ),
                             borderRadius: BorderRadius.circular(100),
                           ),
-                          child: IconButton(
-                            onPressed: () {
-                              AuthService()
-                                  .handleGoogleSignIn(context: context);
-                            },
-                            icon: SvgPicture.asset(
-                              'assets/icons/google_icon.svg',
-                              width: 20,
-                              height: 20,
-                            ),
-                            iconSize: 60,
-                            padding: const EdgeInsets.all(16),
-                            constraints: const BoxConstraints(),
+                          child: Consumer<AuthProvider>(
+                            builder: (context, authProvider, child) {
+                              return IconButton(
+                                onPressed: () async { authProvider.handleGoogleSignIn(context: context);},
+                                //     () {
+                                //   AuthService()
+                                //       .handleGoogleSignIn(context: context);
+                                // },
+                                icon: SvgPicture.asset(
+                                  'assets/icons/google_icon.svg',
+                                  width: 20,
+                                  height: 20,
+                                ),
+                                iconSize: 60,
+                                padding: const EdgeInsets.all(16),
+                                constraints: const BoxConstraints(),
+                              );
+                            }
                           ),
                         ),
                       ],
