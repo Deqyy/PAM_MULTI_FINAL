@@ -1,12 +1,11 @@
+import 'package:app_resep_makanan/domain/repositories/auth_repository.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
-class AuthService {
+class AuthRepositoryImpl implements AuthRepository {
   Future<void> signUp({
-    // required BuildContext context,
     required String name,
     required String email,
     required String password
@@ -26,14 +25,9 @@ class AuthService {
       } else if (e.code == 'email-already-in-use') {
         message = 'The account already exists for that email.';
       }
-      // Fluttertoast.showToast(
-      //   msg: message.toString(),
-      //   toastLength: Toast.LENGTH_LONG,
-      //   gravity: ToastGravity.SNACKBAR,
-      //   backgroundColor: Colors.black54,
-      //   textColor: Colors.white,
-      //   fontSize: 14.0
-      // );
+      if (message != null && message.isNotEmpty) {
+        throw FirebaseAuthException(code: e.code, message: message);
+      }
     }
     catch (e) {
         // Catch any other errors
@@ -60,14 +54,9 @@ class AuthService {
       } else if (e.code == 'invalid-credential') {
         message = "Wrong password provided for that user";
       }
-      // Fluttertoast.showToast(
-      //   msg: message.toString(),
-      //   toastLength: Toast.LENGTH_LONG,
-      //   gravity: ToastGravity.SNACKBAR,
-      //   backgroundColor: Colors.black54,
-      //   textColor: Colors.white,
-      //   fontSize: 14.0
-      // );
+      if (message != null && message.isNotEmpty) {
+        throw FirebaseAuthException(code: e.code, message: message);
+      }
     } catch (e) {
       // Catch any other errors
     }
@@ -80,7 +69,7 @@ class AuthService {
     //     context, '/login');
   }
 
-  Future<String?> getCurrentUser() async {
+  Future<String?> getCurrentUserDisplayName() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) {
       return null;

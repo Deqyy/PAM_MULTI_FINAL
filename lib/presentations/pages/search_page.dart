@@ -186,7 +186,7 @@ class _SearchPageState extends State<SearchPage> {
         child: TextButton(
           style: TextButton.styleFrom(
             backgroundColor: categoryProvider.categoryRepository.selectedCategory == index
-                ? const Color(0xFF70B9BE)
+                ? const Color(0xFFEF6C00)
                 : const Color(0xFFF1F5F5),
             foregroundColor: categoryProvider.categoryRepository.selectedCategory == index
                 ? Colors.white

@@ -19,16 +19,25 @@ abstract class RecipeRepository {
 
   Stream<List<Recipe>> getFavoriteRecipesStream();
 
-  // Future<void> addFavoriteRecipe({
-  //   required String? currentUser,
-  //   required String namaMakanan,
-  //   required String deskripsiMasakan,
-  //   required String waktuMasak,
-  //   required String kalori,
-  //   required List<String> bahan,
-  //   required List<String> instruksi,
-  //   required String urlGambar
-  // });
+  Future<void> addFavoriteRecipe({
+    required String? currentUser,
+    required String namaMakanan,
+    required String deskripsiMasakan,
+    required String waktuMasak,
+    required String kalori,
+    required List<String> bahan,
+    required List<String> instruksi,
+    required String urlGambar
+  });
 
-  Recipe getRecipeFromRTDB(Map<String,dynamic> data);
+  Future<void> removeFavoriteRecipe({
+    required String? currentUser,
+    required String namaMakanan
+  });
+
+  Future<void> setFavoriteStatus(String title, bool isFavorite);
+
+  Future<Map<String, bool>> getAllFavorites();
+
+  Recipe _getRecipeFromRTDB(Map<String,dynamic> data);
 }

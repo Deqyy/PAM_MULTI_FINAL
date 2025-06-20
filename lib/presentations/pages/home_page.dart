@@ -1,5 +1,5 @@
 import 'package:app_resep_makanan/domain/entities/recipe_model.dart';
-import 'package:app_resep_makanan/services/auth_service.dart';
+import 'package:app_resep_makanan/data/repositories/auth_repository_impl.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
@@ -7,6 +7,8 @@ import 'package:app_resep_makanan/presentations/providers/category_provider.dart
 import 'package:app_resep_makanan/presentations/widgets/recipe_card.dart';
 import 'package:app_resep_makanan/presentations/pages/search_page.dart';
 import 'package:app_resep_makanan/presentations/pages/profile_page.dart';
+
+import '../providers/auth_provider.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -134,7 +136,7 @@ class _HomeContentState extends State<HomeContent> {
               ],
             ),
             FutureBuilder<String?>(
-              future: AuthService().getCurrentUser(),
+              future: Provider.of<AuthProvider>(context, listen: false).getCurrentUserDisplayName(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return const CircularProgressIndicator();

@@ -1,7 +1,7 @@
 import 'package:app_resep_makanan/presentations/pages/landing_page.dart';
 import 'package:app_resep_makanan/presentations/pages/login_page.dart';
 import 'package:app_resep_makanan/presentations/providers/auth_provider.dart';
-import 'package:app_resep_makanan/services/auth_service.dart';
+import 'package:app_resep_makanan/data/repositories/auth_repository_impl.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';

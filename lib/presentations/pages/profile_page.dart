@@ -1,5 +1,5 @@
 import 'package:app_resep_makanan/presentations/providers/recipe_provider.dart';
-import 'package:app_resep_makanan/services/auth_service.dart';
+import 'package:app_resep_makanan/data/repositories/auth_repository_impl.dart';
 import 'package:app_resep_makanan/presentations/widgets/recipe_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -84,7 +84,7 @@ class ProfilePage extends StatelessWidget {
                     const SizedBox(width: 10.0),
                     Expanded(
                       child: FutureBuilder<String?>(
-                        future: AuthService().getCurrentUser(),
+                        future: Provider.of<AuthProvider>(context, listen: false).getCurrentUserDisplayName(),
                         builder: (context, snapshot) {
                           if (snapshot.hasData) {
                             return Text(
