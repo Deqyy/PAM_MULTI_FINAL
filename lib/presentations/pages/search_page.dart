@@ -1,9 +1,9 @@
-import 'package:app_resep_makanan/widgets/recipe_card.dart';
+import 'package:app_resep_makanan/presentations/widgets/recipe_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:app_resep_makanan/models/category_model.dart';
-import 'package:app_resep_makanan/models/recipe_model.dart';
+import 'package:app_resep_makanan/presentations/providers/category_provider.dart';
+import 'package:app_resep_makanan/domain/entities/recipe_model.dart';
 
 class SearchPage extends StatefulWidget {
   const SearchPage({super.key});
@@ -21,8 +21,8 @@ class _SearchPageState extends State<SearchPage> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final categoryModel = Provider.of<CategoryModel>(context, listen: false);
-      categoryModel.setSelectedCategory(0, context);
+      final categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
+      categoryProvider.setSelectedCategory(0, context);
     });
 
     _searchController.addListener(() {
@@ -123,9 +123,9 @@ class _SearchPageState extends State<SearchPage> {
                 ],
               ),
               const SizedBox(height: 10.0),
-              Consumer<CategoryModel>(
-                builder: (context, categoryModel, child) {
-                  List<Recipe> recipes = categoryModel.categoryRecipes;
+              Consumer<CategoryProvider>(
+                builder: (context, categoryProvider, child) {
+                  List<Recipe> recipes = categoryProvider.categoryRepository.categoryRecipes;
 
                   List<Recipe> filteredRecipes = recipes
                       .where((recipe) => recipe.namaMakanan
@@ -178,17 +178,17 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   Widget _buildCategoryButton(BuildContext context, int index, String label) {
-    final categoryModel = Provider.of<CategoryModel>(context);
+    final categoryProvider = Provider.of<CategoryProvider>(context);
 
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 2.0),
         child: TextButton(
           style: TextButton.styleFrom(
-            backgroundColor: categoryModel.selectedCategory == index
+            backgroundColor: categoryProvider.categoryRepository.selectedCategory == index
                 ? const Color(0xFF70B9BE)
                 : const Color(0xFFF1F5F5),
-            foregroundColor: categoryModel.selectedCategory == index
+            foregroundColor: categoryProvider.categoryRepository.selectedCategory == index
                 ? Colors.white
                 : Colors.black,
             shape: RoundedRectangleBorder(
@@ -196,7 +196,7 @@ class _SearchPageState extends State<SearchPage> {
             ),
           ),
           onPressed: () {
-            categoryModel.setSelectedCategory(index, context);
+            categoryProvider.setSelectedCategory(index, context);
           },
           child: Text(
             label,

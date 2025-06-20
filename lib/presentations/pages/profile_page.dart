@@ -1,9 +1,11 @@
-import 'package:app_resep_makanan/models/recipe_provider.dart';
+import 'package:app_resep_makanan/presentations/providers/recipe_provider.dart';
 import 'package:app_resep_makanan/services/auth_service.dart';
-import 'package:app_resep_makanan/widgets/recipe_card.dart';
+import 'package:app_resep_makanan/presentations/widgets/recipe_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+
+import '../providers/auth_provider.dart';
 
 class ProfilePage extends StatelessWidget {
   const ProfilePage({super.key});
@@ -100,25 +102,27 @@ class ProfilePage extends StatelessWidget {
                         },
                       ),
                     ),
-                    TextButton(
-                      onPressed: () {
-                        AuthService().signOut(context: context);
-                      },
-                      style: TextButton.styleFrom(
-                        backgroundColor: Colors.red,
-                        padding: const EdgeInsets.symmetric(horizontal: 20.0),
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(10.0),
-                        ),
-                      ),
-                      child: const Text(
-                        'Logout',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontFamily: 'Poppins',
-                            fontSize: 16.0,
-                            fontWeight: FontWeight.bold),
-                      ),
+                    Consumer<AuthProvider>(
+                      builder: (context, authProvider, child) {
+                        return TextButton(
+                          onPressed: () async { authProvider.signOut(context: context);},
+                          style: TextButton.styleFrom(
+                            backgroundColor: Colors.red,
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(10.0),
+                            ),
+                          ),
+                          child: const Text(
+                            'Logout',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: 'Poppins',
+                                fontSize: 16.0,
+                                fontWeight: FontWeight.bold),
+                          ),
+                        );
+                      }
                     ),
                   ],
                 ),

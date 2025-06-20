@@ -11,15 +11,15 @@ class Recipe {
 
   Recipe({ required this.namaMakanan, required this.deskripsiMasakan, required this.waktuMasak, required this.kalori, required this.bahan, required this.instruksi, required this.urlGambar});
 
-  factory Recipe.fromRTDB(Map<String,dynamic> data) { 
-    return Recipe(
-    namaMakanan : data['namaMakanan'],
-    deskripsiMasakan : data['deskripsiMasakan'], 
-    waktuMasak : data['waktuMasak'],
-    kalori : data['kalori'],
-    bahan : data['bahan'].trim().split(","),
-    instruksi : data['instruksi'].trim().split("."),
-    urlGambar : data['urlGambarOnline'], 
-    );
-  }
+  // factory Recipe.fromRTDB(Map<String,dynamic> data) {
+  //   return Recipe(
+  //   namaMakanan : data['namaMakanan'],
+  //   deskripsiMasakan : data['deskripsiMasakan'],
+  //   waktuMasak : data['waktuMasak'],
+  //   kalori : data['kalori'],
+  //   bahan : data['bahan'].trim().split(","),
+  //   instruksi : data['instruksi'].trim().split("."),
+  //   urlGambar : data['urlGambarOnline'],
+  //   );
+  // }
 }

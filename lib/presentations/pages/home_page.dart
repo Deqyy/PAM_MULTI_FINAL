@@ -1,12 +1,12 @@
-import 'package:app_resep_makanan/models/recipe_model.dart';
+import 'package:app_resep_makanan/domain/entities/recipe_model.dart';
 import 'package:app_resep_makanan/services/auth_service.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:app_resep_makanan/models/category_model.dart';
-import 'package:app_resep_makanan/widgets/recipe_card.dart';
-import 'package:app_resep_makanan/pages/search_page.dart';
-import 'package:app_resep_makanan/pages/profile_page.dart';
+import 'package:app_resep_makanan/presentations/providers/category_provider.dart';
+import 'package:app_resep_makanan/presentations/widgets/recipe_card.dart';
+import 'package:app_resep_makanan/presentations/pages/search_page.dart';
+import 'package:app_resep_makanan/presentations/pages/profile_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -90,14 +90,14 @@ class _HomeContentState extends State<HomeContent> {
     super.initState();
 
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final categoryModel = Provider.of<CategoryModel>(context, listen: false);
-      categoryModel.setSelectedCategory(0, context);
+      final categoryProvider = Provider.of<CategoryProvider>(context, listen: false);
+      categoryProvider.setSelectedCategory(0, context);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    Provider.of<CategoryModel>(context);
+    Provider.of<CategoryProvider>(context);
 
     return Container(
       decoration: const BoxDecoration(
@@ -198,9 +198,9 @@ class _HomeContentState extends State<HomeContent> {
               ),
             ),
             const SizedBox(height: 10.0),
-            Consumer<CategoryModel>(
-              builder: (context, categoryModel, child) {
-                List<Recipe> recipes = categoryModel.categoryRecipes;
+            Consumer<CategoryProvider>(
+              builder: (context, categoryProvider, child) {
+                List<Recipe> recipes = categoryProvider.categoryRepository.categoryRecipes;
 
                 return recipes.isEmpty
                     ? const Center(child: CircularProgressIndicator())
@@ -239,17 +239,17 @@ class _HomeContentState extends State<HomeContent> {
   }
 
   Widget _buildCategoryButton(BuildContext context, int index, String label) {
-    final categoryModel = Provider.of<CategoryModel>(context);
+    final categoryProvider = Provider.of<CategoryProvider>(context);
 
     return Expanded(
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 2.0),
         child: TextButton(
           style: TextButton.styleFrom(
-            backgroundColor: categoryModel.selectedCategory == index
+            backgroundColor: categoryProvider.categoryRepository.selectedCategory == index
                 ? const Color(0xFFEF6C00)
                 : const Color(0xFFF1F5F5),
-            foregroundColor: categoryModel.selectedCategory == index
+            foregroundColor: categoryProvider.categoryRepository.selectedCategory == index
                 ? Colors.white
                 : Colors.black,
             shape: RoundedRectangleBorder(
@@ -257,7 +257,7 @@ class _HomeContentState extends State<HomeContent> {
             ),
           ),
           onPressed: () {
-            categoryModel.setSelectedCategory(index, context);
+            categoryProvider.setSelectedCategory(index, context);
           },
           child: Text(
             label,

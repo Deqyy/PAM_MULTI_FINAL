@@ -6,7 +6,7 @@ import 'package:google_sign_in/google_sign_in.dart';
 
 class AuthService {
   Future<void> signUp({
-    required BuildContext context,
+    // required BuildContext context,
     required String name,
     required String email,
     required String password
@@ -16,8 +16,8 @@ class AuthService {
 
       FirebaseDatabase.instance.ref().child('users').child(name).set({"nama": name});
 
-      await Future.delayed(const Duration(seconds: 1));
-      Navigator.pushReplacementNamed(context, '/home');
+      // await Future.delayed(const Duration(seconds: 1));
+      // Navigator.pushReplacementNamed(context, '/home');
 
     } on FirebaseAuthException catch (e) {
       String? message = '';
@@ -26,14 +26,14 @@ class AuthService {
       } else if (e.code == 'email-already-in-use') {
         message = 'The account already exists for that email.';
       }
-      Fluttertoast.showToast(
-        msg: message.toString(),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0
-      );
+      // Fluttertoast.showToast(
+      //   msg: message.toString(),
+      //   toastLength: Toast.LENGTH_LONG,
+      //   gravity: ToastGravity.SNACKBAR,
+      //   backgroundColor: Colors.black54,
+      //   textColor: Colors.white,
+      //   fontSize: 14.0
+      // );
     }
     catch (e) {
         // Catch any other errors
@@ -41,16 +41,16 @@ class AuthService {
   }
 
   Future<void> signIn({
-    required BuildContext context,
+    // required BuildContext context,
     required String email,
     required String password
   }) async {
     try {
       await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
 
-      await Future.delayed(const Duration(seconds: 1));
-      Navigator.pushReplacementNamed(
-        context, '/home');
+      // await Future.delayed(const Duration(seconds: 1));
+      // Navigator.pushReplacementNamed(
+      //   context, '/home');
 
     } on FirebaseAuthException catch (e) {
       String? message = '';
@@ -60,26 +60,24 @@ class AuthService {
       } else if (e.code == 'invalid-credential') {
         message = "Wrong password provided for that user";
       }
-      Fluttertoast.showToast(
-        msg: message.toString(),
-        toastLength: Toast.LENGTH_LONG,
-        gravity: ToastGravity.SNACKBAR,
-        backgroundColor: Colors.black54,
-        textColor: Colors.white,
-        fontSize: 14.0
-      );
+      // Fluttertoast.showToast(
+      //   msg: message.toString(),
+      //   toastLength: Toast.LENGTH_LONG,
+      //   gravity: ToastGravity.SNACKBAR,
+      //   backgroundColor: Colors.black54,
+      //   textColor: Colors.white,
+      //   fontSize: 14.0
+      // );
     } catch (e) {
       // Catch any other errors
     }
   }
 
-  Future<void> signOut({
-    required BuildContext context
-  }) async {
+  Future<void> signOut() async {
     await FirebaseAuth.instance.signOut();
     await Future.delayed(const Duration(seconds: 1));
-    Navigator.pushReplacementNamed(
-        context, '/login');
+    // Navigator.pushReplacementNamed(
+    //     context, '/login');
   }
 
   Future<String?> getCurrentUser() async {
@@ -91,26 +89,29 @@ class AuthService {
     }
   }
 
-  void handleGoogleSignIn(
-    {
-      required BuildContext context
-    }
+  Future<UserCredential> handleGoogleSignIn(
+    // {
+    //   required BuildContext context
+    // }
   ) async {
     try {
       final googleUser = await GoogleSignIn().signIn();
       final googleAuth = await googleUser?.authentication;
       final cred = GoogleAuthProvider.credential(idToken: googleAuth?.idToken, accessToken: googleAuth?.accessToken);
 
-      await FirebaseAuth.instance.signInWithCredential(cred);
+      final userCredential = await FirebaseAuth.instance.signInWithCredential(cred);
 
       String user = FirebaseAuth.instance.currentUser!.displayName.toString();
       FirebaseDatabase.instance.ref().child('users').child(user).set({"nama": user});
 
-      await Future.delayed(const Duration(seconds: 1));
-      Navigator.pushReplacementNamed(
-        context, '/home');
+      // await Future.delayed(const Duration(seconds: 1));
+      // Navigator.pushReplacementNamed(
+      //   context, '/home');
+      return userCredential;
+    } on FirebaseAuthException catch (e) {
+      throw FirebaseAuthException(code: e.code);
     } catch (e) {
-      print(e);
+      throw Exception('Failed to sign in with Google: $e');
     }
   }
 

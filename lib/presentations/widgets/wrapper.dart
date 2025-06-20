@@ -1,5 +1,5 @@
-import 'package:app_resep_makanan/pages/home_page.dart';
-import 'package:app_resep_makanan/pages/landing_page.dart';
+import 'package:app_resep_makanan/presentations/pages/home_page.dart';
+import 'package:app_resep_makanan/presentations/pages/landing_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
